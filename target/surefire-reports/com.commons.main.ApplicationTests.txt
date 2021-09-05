@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.commons.main.ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.868 s - in com.commons.main.ApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.349 s - in com.commons.main.ApplicationTests

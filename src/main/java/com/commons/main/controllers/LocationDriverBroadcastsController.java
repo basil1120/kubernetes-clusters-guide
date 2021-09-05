@@ -38,7 +38,7 @@ public class LocationDriverBroadcastsController {
 	   	}else if(!headers.get("api_secrete").equals(properties.getApiSecrete())) {
 	   		log.info("-----ValidationError : 401 Unauthorised");
 	   		return ResponseEntity.status(401).body(null);
-	   	}else if(!headers.get("api_version").equals("1.0.0")) {
+	   	}else if(!headers.get("api_version").equals(properties.getApiVersion())) {
 	   		log.info("-----ValidationError : 403 Forbidden");
 	   		return ResponseEntity.status(403).body(null);
 	   	}else {
@@ -52,10 +52,10 @@ public class LocationDriverBroadcastsController {
 	   	if(headers.get("api_secrete") == null || headers.get("api_version") == null || headers.get("api_deviceid") == null) {
 	   		log.info("-----ValidationError : 412 Precondition failed");
 	   		return ResponseEntity.status(412).body(null);
-	   	}else if(!headers.get("api_secrete").equals("password")) {
+	   	}else if(!headers.get("api_secrete").equals(properties.getApiSecrete())) {
 	   		log.info("-----ValidationError : 401 Unauthorised");
 	   		return ResponseEntity.status(401).body(null);
-	   	}else if(!headers.get("api_version").equals("1.0.0")) {
+	   	}else if(!headers.get("api_version").equals(properties.getApiVersion())) {
 	   		log.info("-----ValidationError : 403 Forbidden");
 	   		return ResponseEntity.status(403).body(null);
 	   	}else {
@@ -69,10 +69,10 @@ public class LocationDriverBroadcastsController {
 	   	if(headers.get("api_secrete") == null || headers.get("api_version") == null || headers.get("api_deviceid") == null) {
 	   		log.info("-----ValidationError : 412 Precondition failed");
 	   		return ResponseEntity.status(412).body(null);
-	   	}else if(!headers.get("api_secrete").equals("password")) {
+	   	}else if(!headers.get("api_secrete").equals(properties.getApiSecrete())) {
 	   		log.info("-----ValidationError : 401 Unauthorised");
 	   		return ResponseEntity.status(401).body(null);
-	   	}else if(!headers.get("api_version").equals("1.0.0")) {
+	   	}else if(!headers.get("api_version").equals(properties.getApiVersion())) {
 	   		log.info("-----ValidationError : 403 Forbidden");
 	   		return ResponseEntity.status(403).body(null);
 	   	}else {
