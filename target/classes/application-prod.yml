@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: farasiapp-matching-api
+  profiles: dev
+  
+  data:
+    mongodb:
+      uri: ${MONGO_URL:mongodb://localhost:27017/farasiapp}
+          
+api:
+  api-secrete: password
+  api-version: 1.0.0 
+  api-username: admin
+  api-password: admin  
