@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: farasiapp-matching-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: farasiapp-matching-api
+  template:
+    metadata:
+      labels:
+        app: farasiapp-matching-api
+    spec:
+      containers:
+        - name: app
+          image: basiljereh/farasiapp-matchingstatus-api:v3
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGO_URL
+              value: mongodb://mongo:27017/farasiapp
+            - name: API_SECRETE
+              value: password
+            - name: API_VERSION
+              value: 1.0.0
+            - name: API_USERNAME
+              value: admin
+            - name: API_PASSWORD
+              value: admin 
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: farasiapp-matching-api-service
+spec:
+  ports:
+    - nodePort: 30001
+      port: 80
+      targetPort: 8080
+  selector:
+    app: farasiapp-matching-api
+  type: NodePort
