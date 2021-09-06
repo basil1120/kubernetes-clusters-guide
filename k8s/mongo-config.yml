@@ -5,3 +5,4 @@ metadata:
 data:
  host: mongodb-service
  database: admin
+ authentication-database: admin

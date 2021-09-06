@@ -37,7 +37,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: mongo-conf 
-                  key: host      
+                  key: host   
+            - name: MONGO_AUTH_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-conf 
+                  key: authentication-database                      
             - name: API_VERSION
               valueFrom:
                 configMapKeyRef:
