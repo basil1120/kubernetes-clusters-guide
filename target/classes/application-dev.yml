@@ -1,16 +1,29 @@
-server:
-  max-http-header-size: 10000000
-
 spring:
   application:
     name: farasiapp-matching-api
-  profiles: dev
+  profiles:
+  - dev
   data:
     mongodb:
-      uri: mongodb://localhost:27017/farasiapp
-          
+      host: localhost
+      database: dev
+      port: 27017
+      username: test
+      password: test@123
+      authentication-database: admin  
 api:
   api-secrete: password
   api-version: 1.0.0 
   api-username: admin
-  api-password: admin    
+  api-password: admin  
+      
+management:
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+
+server:
+  max-http-header-size: 10000000
+   

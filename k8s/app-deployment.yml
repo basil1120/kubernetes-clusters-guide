@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: farasiapp-matching-api
+spec:
+  selector:
+      matchLabels:
+        app: farasiapp-matching-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: farasiapp-matching-api
+    spec:
+      containers:
+        - name: farasi-app
+          image: basiljereh/farasiapp-matching-api:v3
+          ports:
+          - containerPort: 8080
+          env:
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: username
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: password
+            - name: MONGO_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-conf  
+                  key: database
+            - name: MONGO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-conf 
+                  key: host      
+            - name: API_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: app-conf-map
+                  key: api_version
+            - name: API_SECRETE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-conf-map
+                  key: api_secrete
+            - name: API_USERNAME
+              valueFrom:
+                configMapKeyRe:
+                  name: app-conf-map
+                  key:  api_username
+            - name: API_PASSWORD
+              valueFrom:
+                configMapKeyRe:
+                  name: app-conf-map
+                  key:  api_password                 
+          imagePullPolicy: Always 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: farasiapp-matching-api-service
+spec:
+  selector:
+    app: farasiapp-matching-api
+  ports:
+  - protocol: TCP
+    port: 8080
+    nodePort: 30003
+  type: NodePort                                  

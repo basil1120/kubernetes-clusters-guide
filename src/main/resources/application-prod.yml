@@ -1,14 +1,29 @@
 spring:
   application:
     name: farasiapp-matching-api
-  profiles: dev
-  
+  profiles:
+  - prod
   data:
     mongodb:
-      uri: ${MONGO_URL:mongodb://localhost:27017/farasiapp}
-          
+      host: '${MONGO_HOST}'
+      database: '${MONGO_DB}'
+      port: 27017
+      username: '${MONGO_USERNAME}'
+      password: '${MONGO_PASSWORD}'
+      authentication-database: '${MONGO_AUTH_DB}'  
+      
 api:
-  api-secrete: password
-  api-version: 1.0.0 
-  api-username: admin
-  api-password: admin  
+  api-secrete: '${API_SECRETE}'
+  api-version: '${API_VERSION}'
+  api-username: '${API_USERNAME}'
+  api-password: '${API_PASSWORD}'         
+      
+management:
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+
+server:
+  max-http-header-size: 10000000

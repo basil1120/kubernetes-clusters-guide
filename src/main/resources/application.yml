@@ -1,7 +1,7 @@
 spring:
   application:
     name: farasiapp-matching-api
-    
   profiles:
-    active: prod 
+    active:
+    - prod
    
