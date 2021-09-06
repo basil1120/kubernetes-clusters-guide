@@ -50,12 +50,12 @@ spec:
                   key: api_secrete
             - name: API_USERNAME
               valueFrom:
-                configMapKeyRe:
+                configMapKeyRef:
                   name: app-conf-map
                   key:  api_username
             - name: API_PASSWORD
               valueFrom:
-                configMapKeyRe:
+                configMapKeyRef:
                   name: app-conf-map
                   key:  api_password                 
           imagePullPolicy: Always 
