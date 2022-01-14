@@ -9,6 +9,7 @@
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/repository/DriverLogRepository.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/repository/MatchLogRiderRepository.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/models/CancellationLog.java
+/Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/service/MatchLogHistoryService.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/controllers/DriverLogController.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/service/MatchLogDriverService.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/repository/MatchLogDriverRepository.java
@@ -20,6 +21,7 @@
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/models/DriverLog.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/service/LocationDriverBroadcastsService.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/repository/LocationRiderBroadcastsRepository.java
+/Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/controllers/MatchLogHistroyController.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/Application.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/models/MatchLogDriver.java
 /Users/jeremiahbasilaura/Development/Bassam/Code/GitClones/kubernetes-clusters-guide/src/main/java/com/commons/main/controllers/MatchLogRiderController.java

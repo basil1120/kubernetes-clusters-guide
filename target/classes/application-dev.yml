@@ -8,9 +8,9 @@ spring:
       host: localhost
       database: dev
       port: 27017
-      username: test
-      password: test@123
-      authentication-database: admin  
+      username: basil
+      password: password
+      authentication-database: admin    
 api:
   api-secrete: password
   api-version: 1.0.0 

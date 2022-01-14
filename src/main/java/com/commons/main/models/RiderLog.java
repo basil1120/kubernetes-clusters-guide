@@ -23,23 +23,6 @@ public class RiderLog {
 	private String pickUpLocation;
 	private String dropOffLocation;
 	
-/*
-	public RiderLog(String riderId, String transactionTime, double slat, double slon, double dlat, double dlon, int inMatching, int inTrip, String transportMode, String estimatedDistance, double estimatedPrice) {
-		super();
-
-		this.riderId = riderId;
-		this.transactionTime = transactionTime;
-		this.slat = slat;
-		this.slon = slon;
-		this.dlat = dlat;
-		this.dlon = dlon;
-		this.inMatching = inMatching;
-		this.inTrip = inTrip;
-		this.transportMode = transportMode;
-		this.estimatedDistance = estimatedDistance;
-		this.estimatedPrice = estimatedPrice;
-	}
-*/
 	public String getRiderId() {
 		return riderId;
 	}
@@ -142,7 +125,5 @@ public class RiderLog {
 
 	public void setDropOffLocation(String dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
-	}
-	
-	
+	}	
 }

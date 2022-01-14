@@ -26,24 +26,6 @@ public class DriverLog {
 	
 	public DriverLog(){}
 
-	/*
-	public DriverLog(String driverId,String transactionTime, double slat, double slon, double dlat, double dlon ,int inMatching, int inTrip, String noOfSeats,String transportMode, String estimatedDistance, double estimatedPrice) {
-		super();
-		this.driverId = driverId;
-		this.transactionTime = transactionTime;
-		this.slat = slat;
-		this.slon = slon;
-		this.dlat = dlat;
-		this.dlon = dlon;
-		this.inMatching = inMatching;
-		this.inTrip = inTrip;
-		this.noOfSeats = noOfSeats;
-		this.transportMode = transportMode;
-		this.estimatedDistance = estimatedDistance;
-		this.estimatedPrice = estimatedPrice;
-		
-	}*/
-
 	public String getDriverId() {
 		return driverId;
 	}

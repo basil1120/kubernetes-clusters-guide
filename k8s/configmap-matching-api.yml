@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+   name: farasiapp-matching-api-configmap
+data:
+  mongo.database.host: mongodb
+  mongo.database.name: admin
+  mongo.database.port: '27017'
+  mongo.authentication.database: admin
+  #--------- API SECTION ----------
+  api.version: 1.0.0
+  api.username: admin
+  api.password: admin@123

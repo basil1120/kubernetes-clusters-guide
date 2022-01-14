@@ -7,7 +7,7 @@ spring:
     mongodb:
       host: '${MONGO_HOST}'
       database: '${MONGO_DB}'
-      port: 27017
+      port: '${MONGO_PORT}'
       username: '${MONGO_USERNAME}'
       password: '${MONGO_PASSWORD}'
       authentication-database: '${MONGO_AUTH_DB}'  
@@ -27,3 +27,6 @@ management:
 
 server:
   max-http-header-size: 10000000
+  
+logging:
+  config: classpath:logback.xml   

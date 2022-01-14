@@ -48,7 +48,7 @@ public class MatchLogRiderService{
     public MatchLogRider getUser(String userId) {
     	
       	MatchLogRider  matchLogRider;
-    	MatchLogDriver matchLogDriver;
+    	//MatchLogDriver matchLogDriver;
     	Throwable throwable = null;
     	
     	Optional<MatchLogRider> rider = riderMatchLogRepository.findById(userId);

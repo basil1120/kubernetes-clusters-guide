@@ -2,6 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: farasiapp-matching-api
+  labels:
+    app: farasiapp-matching-api
+    tier: microservice
 spec:
   selector:
       matchLabels:
@@ -13,56 +16,63 @@ spec:
         app: farasiapp-matching-api
     spec:
       containers:
-        - name: farasi-app
-          image: basiljereh/farasiapp-matching-api:v3
+        - name: farasiapp-matching-api
+          image: basiljereh/farasiapp-matching-api:latest
           ports:
           - containerPort: 8080
-          env:
+          env:        
             - name: MONGO_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mongo-secret
-                  key: username
+                  name: secrete-farasiapp-matching-api
+                  key: mongo.database.username
             - name: MONGO_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mongo-secret
-                  key: password
+                  name: secrete-farasiapp-matching-api
+                  key: mongo.database.password
             - name: MONGO_DB
               valueFrom:
                 configMapKeyRef:
-                  name: mongo-conf  
-                  key: database
+                  name: farasiapp-matching-api-configmap  
+                  key: mongo.database.name
             - name: MONGO_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: mongo-conf 
-                  key: host   
+                  name: farasiapp-matching-api-configmap
+                  key: mongo.database.host  
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: farasiapp-matching-api-configmap
+                  key: mongo.database.port                    
             - name: MONGO_AUTH_DB
               valueFrom:
                 configMapKeyRef:
-                  name: mongo-conf 
-                  key: authentication-database                      
+                  name: farasiapp-matching-api-configmap
+                  key: mongo.authentication.database                      
             - name: API_VERSION
               valueFrom:
                 configMapKeyRef:
-                  name: app-conf-map
-                  key: api_version
+                  name: farasiapp-matching-api-configmap
+                  key: api.version
             - name: API_SECRETE
               valueFrom:
-                configMapKeyRef:
-                  name: app-conf-map
-                  key: api_secrete
+                secretKeyRef:
+                  name: secrete-farasiapp-matching-api
+                  key: api.secrete
             - name: API_USERNAME
               valueFrom:
                 configMapKeyRef:
-                  name: app-conf-map
-                  key:  api_username
+                  name: farasiapp-matching-api-configmap
+                  key:  api.username
             - name: API_PASSWORD
               valueFrom:
                 configMapKeyRef:
-                  name: app-conf-map
-                  key:  api_password                 
+                  name: farasiapp-matching-api-configmap
+                  key:  api.password  
+            - name: TZ
+              value: Africa/Nairobi                                  
           imagePullPolicy: Always 
 ---
 apiVersion: v1

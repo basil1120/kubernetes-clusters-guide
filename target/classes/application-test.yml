@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: farasiapp-matching-api
+  profiles:
+  - test
+  data:
+    mongodb:
+      host: 127.0.0.1
+      database: farasiapp
+      port: 27017
+      username: superadmin
+      password: PasswordKenya#2022!
+      authentication-database: admin
+      
+api:
+  api-secrete: password
+  api-version: 1.0.0 
+  api-username: admin
+  api-password: admin  
+      
+management:
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+
+server:
+  max-http-header-size: 10000000
+  port: 20007
+   
