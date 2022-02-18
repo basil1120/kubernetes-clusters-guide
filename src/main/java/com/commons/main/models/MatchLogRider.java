@@ -7,8 +7,11 @@ public class MatchLogRider {
 	@Id
 	private String id;
 	private String driverId;
+	private String messageId;
 	private String conversationId;
 	private String matchTime;
+	private String expired;
+	private String cancelled;
 	private String transportMode; // 1=BODA, 2=ECONOMY, 3=EXECUTIVE
 	private int rideraccepted;
 	private int driveraccepted;
@@ -175,6 +178,30 @@ public class MatchLogRider {
 
 	public void setDropOffLocation(String dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
+	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
+	}
+
+	public String getExpired() {
+		return expired;
+	}
+
+	public void setExpired(String expired) {
+		this.expired = expired;
+	}
+
+	public String getCancelled() {
+		return cancelled;
+	}
+
+	public void setCancelled(String cancelled) {
+		this.cancelled = cancelled;
 	}
 	
 	

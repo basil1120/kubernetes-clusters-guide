@@ -11,6 +11,7 @@ public class DriverLog {
 	@Id
 	public String driverId;
 	public String transactionTime;
+	public String messageId;
 	public double slat;
 	public double slon;	
 	public double dlat;
@@ -136,6 +137,14 @@ public class DriverLog {
 
 	public void setDropOffLocation(String dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
+	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
 	}
 
 

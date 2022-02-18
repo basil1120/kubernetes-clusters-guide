@@ -11,6 +11,7 @@ public class RiderLog {
 	@Id
 	public String riderId;	
 	public String transactionTime;
+	public String messageId;
 	public double slat;
 	public double slon;	
 	public double dlat;
@@ -125,5 +126,15 @@ public class RiderLog {
 
 	public void setDropOffLocation(String dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
-	}	
+	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
+	}
+	
+	
 }

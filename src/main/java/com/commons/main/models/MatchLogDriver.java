@@ -7,6 +7,7 @@ public class MatchLogDriver {
 	@Id
 	private String id;
 	private String riderId;
+	private String messageId;
 	private String conversationId;
 	private String matchTime;
 	private String transportMode; // 1=BODA, 2=ECONOMY, 3=EXECUTIVE
@@ -157,6 +158,14 @@ public class MatchLogDriver {
 
 	public void setDropOffLocation(String dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
+	}
+
+	public String getMessageId() {
+		return messageId;
+	}
+
+	public void setMessageId(String messageId) {
+		this.messageId = messageId;
 	}
 	
 	
