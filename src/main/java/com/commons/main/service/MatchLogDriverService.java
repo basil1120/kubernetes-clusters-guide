@@ -1,7 +1,6 @@
 package com.commons.main.service;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
+//import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,6 +23,12 @@ import com.commons.main.utils.ResourceNotFoundException;
 @Service
 public class MatchLogDriverService {
 
+	private static final Logger logger = LoggerFactory.getLogger(MatchLogDriverService.class);
+
+	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+	//private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	
 	@Autowired
 	private MatchLogDriverRepository userRepository;
 
@@ -32,12 +37,6 @@ public class MatchLogDriverService {
 
 	@Autowired
 	private MatchLogHistoryRepository historyRepository;
-
-	private static final Logger logger = LoggerFactory.getLogger(MatchLogDriverService.class);
-
-	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
-	private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 	public MatchLogDriver registerUser(MatchLogDriver user) {
 		user = userRepository.save(user);
@@ -162,36 +161,52 @@ public class MatchLogDriverService {
 				matchLogRider.setDriveraccepted(1);
 				matchLogRider.setRideraccepted(1);
 				riderRepository.save(matchLogRider);
+			}else {
+				return null;
 			}
 			// NOW PUSH TO HISTORY TABLE
 			MatchLogHistory history = new MatchLogHistory();
-
+			
+			
+			//double timeTaken = calculateTime(matchLogDriver.getMatchTime(), simpleDateFormat.format(new Date()));
+			//double distance = calculateDistance(matchLogDriver.getRiderSourceLat(), matchLogDriver.getRiderSourceLon(),matchLogDriver.getRiderDestinationLat(), matchLogDriver.getRiderDestinationLon());
+			//decimalFormat.setRoundingMode(RoundingMode.UP);
+			//double tripCost = calculatePrice(Double.parseDouble(decimalFormat.format(distance)), timeTaken);
+			String transportType; //1=BODA , 2=ECONOMY, 3=PREMIUM
+			if(matchLogDriver.getTransportMode().equalsIgnoreCase("1")) {
+				transportType = "BODA";
+			}else if(matchLogDriver.getTransportMode().equalsIgnoreCase("2")) {
+				transportType = "ECONOMY CAR";
+			}else if(matchLogDriver.getTransportMode().equalsIgnoreCase("3")) {
+				transportType = "PREMIUM CAR";
+			}else {
+				transportType = "OTHERS";
+			}	
+			
+			history.setTripTimeTaken(matchLogDriver.getEstimatedTime());
+			history.setTripAmount(Double.valueOf(matchLogDriver.getEstimatedPrice()));
+			history.setDriverId(matchLogDriver.getDriverId());
+			history.setDriverName(matchLogDriver.getDriverName());
+			history.setRiderName(matchLogDriver.getRiderName());
+			history.setRiderId(matchLogDriver.getRiderId());
 			history.setConversationId(matchLogDriver.getConversationId());
 			history.setCompletedByDriver(1);
 			history.setCompletedByRider(0);
 			history.setMatchTime(matchLogDriver.getMatchTime());
 			history.setPickupTime(matchLogDriver.getMatchTime());
 			history.setCompletionTime(simpleDateFormat.format(new Date()));
-			history.setStatus(0);
+			history.setStatus("COMPLETED"); //1=COMPLETED : 2=CANCELED : EXPIRED
 			history.setsLat(matchLogDriver.getRiderSourceLat());
 			history.setsLon(matchLogDriver.getRiderSourceLon());
 			history.setdLat(matchLogDriver.getRiderDestinationLat());
 			history.setdLon(matchLogDriver.getRiderDestinationLon());
-			history.setDriverId(matchLogDriver.getId());
-			history.setRiderId(matchLogDriver.getRiderId());
-
-			double timeTaken = calculateTime(matchLogDriver.getMatchTime(), simpleDateFormat.format(new Date()));
-			
-			double distance = calculateDistance(matchLogDriver.getRiderSourceLat(), matchLogDriver.getRiderSourceLon(),matchLogDriver.getRiderDestinationLat(), matchLogDriver.getRiderDestinationLon());
-			decimalFormat.setRoundingMode(RoundingMode.UP);
-
-			double tripCost = calculatePrice(Double.parseDouble(decimalFormat.format(distance)), timeTaken);
-
-			history.setDestinationDistance(Double.parseDouble(decimalFormat.format(distance)));
-			history.setPickupDistance(0);
-			history.setTripAmount(tripCost);
-			history.setTripTimeTaken(String.valueOf(timeTaken));
-
+			history.setTransportMode(matchLogDriver.getTransportMode());
+			history.setTransportType(transportType);
+			history.setVehicleNumberPlate(matchLogDriver.getVehicleNumberPlate());
+			history.setPickupDistance(matchLogDriver.getSourceDistance());
+			history.setPickUpLocation(matchLogDriver.getPickUpLocation());
+			history.setDropOffLocation(matchLogDriver.getDropOffLocation());
+			history.setDestinationDistance(Double.parseDouble(matchLogDriver.getEstimatedDistance()));
 			historyRepository.save(history);
 			return matchLogDriver;
 		} else {
@@ -221,27 +236,48 @@ public class MatchLogDriverService {
 				matchLogRider.setDriveraccepted(2);
 				matchLogRider.setRideraccepted(0);
 				riderRepository.save(matchLogRider);
+			}else {
+				return null;
 			}
 			
 			// NOW PUSH TO HISTORY TABLE
 			MatchLogHistory history = new MatchLogHistory();
+			
+			String transportType; //1=BODA , 2=ECONOMY, 3=PREMIUM
+			if(matchLogDriver.getTransportMode().equalsIgnoreCase("1")) {
+				transportType = "BODA";
+			}else if(matchLogDriver.getTransportMode().equalsIgnoreCase("2")) {
+				transportType = "ECONOMY CAR";
+			}else if(matchLogDriver.getTransportMode().equalsIgnoreCase("3")) {
+				transportType = "PREMIUM CAR";
+			}else {
+				transportType = "OTHERS";
+			}	
+			
+			history.setTripTimeTaken(matchLogDriver.getEstimatedTime());
+			history.setTripAmount(Double.valueOf(matchLogDriver.getEstimatedPrice()));
+			history.setDriverId(matchLogDriver.getDriverId());
+			history.setDriverName(matchLogDriver.getDriverName());
+			history.setRiderName(matchLogDriver.getRiderName());
+			history.setRiderId(matchLogDriver.getRiderId());
 			history.setConversationId(matchLogDriver.getConversationId());
 			history.setCompletedByDriver(1);
 			history.setCompletedByRider(0);
 			history.setMatchTime(matchLogDriver.getMatchTime());
 			history.setPickupTime(matchLogDriver.getMatchTime());
 			history.setCompletionTime(simpleDateFormat.format(new Date()));
-			history.setStatus(0);
+			history.setStatus("CANCELED"); //1=COMPLETED : 2=CANCELED : EXPIRED
 			history.setsLat(matchLogDriver.getRiderSourceLat());
 			history.setsLon(matchLogDriver.getRiderSourceLon());
 			history.setdLat(matchLogDriver.getRiderDestinationLat());
 			history.setdLon(matchLogDriver.getRiderDestinationLon());
-			history.setDriverId(matchLogDriver.getId());
-			history.setRiderId(matchLogDriver.getRiderId());
-			history.setDestinationDistance(0);
-			history.setPickupDistance(0);
-			history.setTripAmount(0);
-			history.setTripTimeTaken("0");
+			history.setTransportMode(matchLogDriver.getTransportMode());
+			history.setTransportType(transportType);
+			history.setVehicleNumberPlate(matchLogDriver.getVehicleNumberPlate());
+			history.setDestinationDistance(Double.parseDouble(matchLogDriver.getEstimatedDistance()));
+			history.setPickupDistance(matchLogDriver.getSourceDistance());
+			history.setPickUpLocation(matchLogDriver.getPickUpLocation());
+			history.setDropOffLocation(matchLogDriver.getDropOffLocation());
 			historyRepository.save(history);
 			
 			return matchLogDriver;

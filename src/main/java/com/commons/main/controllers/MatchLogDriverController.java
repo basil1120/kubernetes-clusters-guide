@@ -43,7 +43,11 @@ public class MatchLogDriverController {
 	    		return ResponseEntity.status(403).body(null);
 	    	}else {
 			  MatchLogDriver user = driverImpl.getUser(id);
-		      return new ResponseEntity<>(user, HttpStatus.OK);
+			  if(user == null) {
+				  return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			  }else {
+				  return new ResponseEntity<>(user, HttpStatus.OK);
+			  }
 	    	}
 	  }
 	  
@@ -61,7 +65,11 @@ public class MatchLogDriverController {
 	    		return ResponseEntity.status(403).body(null);
 	    	}else {
 			  MatchLogDriver user = driverImpl.acceptRiderRquest(id);
-		      return new ResponseEntity<>(user, HttpStatus.OK);
+			  if(user == null) {
+				  return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			  }else {
+				  return new ResponseEntity<>(user, HttpStatus.OK);
+			  }
 	    	}
 	  }
 	  
@@ -79,7 +87,11 @@ public class MatchLogDriverController {
 	    		return ResponseEntity.status(403).body(null);
 	    	}else {
 			  MatchLogDriver user = driverImpl.rejectRiderRquest(id);
-		      return new ResponseEntity<>(user, HttpStatus.OK);
+			  if(user == null) {
+				  return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			  }else {
+				  return new ResponseEntity<>(user, HttpStatus.OK);
+			  }
 	    	}
 	  }
 	  
@@ -97,7 +109,11 @@ public class MatchLogDriverController {
 	    		return ResponseEntity.status(403).body(null);
 	    	}else {
 			  MatchLogDriver user = driverImpl.pickingUpCustomer(id);
-		      return new ResponseEntity<>(user, HttpStatus.OK);
+			  if(user == null) {
+				  return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			  }else {
+				  return new ResponseEntity<>(user, HttpStatus.OK);
+			  }
 	    	}
 	  }
 	  
@@ -115,7 +131,11 @@ public class MatchLogDriverController {
 	    		return ResponseEntity.status(403).body(null);
 	    	}else {
 			  MatchLogDriver user = driverImpl.drivingCustomer(id);
-		      return new ResponseEntity<>(user, HttpStatus.OK);
+			  if(user == null) {
+				  return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			  }else {
+				  return new ResponseEntity<>(user, HttpStatus.OK);
+			  }
 	    	}
 	  }
 	  
@@ -133,7 +153,11 @@ public class MatchLogDriverController {
 	    		return ResponseEntity.status(403).body(null);
 	    	}else {
 			  MatchLogDriver user = driverImpl.endTripRquest(id);
-		      return new ResponseEntity<>(user, HttpStatus.OK);
+			  if(user == null) {
+				  return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			  }else {
+				  return new ResponseEntity<>(user, HttpStatus.OK);
+			  }
 	    	}
 	  }
 	  

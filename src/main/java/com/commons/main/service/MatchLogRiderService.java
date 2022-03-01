@@ -20,10 +20,13 @@ import com.commons.main.repository.MatchLogHistoryRepository;
 import com.commons.main.repository.MatchLogRiderRepository;
 import com.commons.main.utils.ResourceNotFoundException;
 
-
 @Service
 public class MatchLogRiderService{
 
+	private static final Logger logger = LoggerFactory.getLogger(MatchLogRiderService.class);
+	
+	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	
 	@Autowired
     private MatchLogRiderRepository riderMatchLogRepository;
 	
@@ -35,10 +38,6 @@ public class MatchLogRiderService{
 	
 	@Autowired
 	private MatchLogHistoryRepository historyRepository;
-
-	private static final Logger logger = LoggerFactory.getLogger(MatchLogRiderService.class);
-	
-	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	
     public MatchLogRider registerUser(MatchLogRider rider) throws Exception {
         rider = riderMatchLogRepository.save(rider);
@@ -46,13 +45,9 @@ public class MatchLogRiderService{
     }
 
     public MatchLogRider getUser(String userId) {
-    	
       	MatchLogRider  matchLogRider;
-    	//MatchLogDriver matchLogDriver;
     	Throwable throwable = null;
-    	
     	Optional<MatchLogRider> rider = riderMatchLogRepository.findById(userId);
-     	
     	if(rider.isPresent()) {	
     	    matchLogRider = rider.get();	
 	    	if(matchLogRider.getIsPooled() == 0 && matchLogRider.getRideraccepted() == 0) {
@@ -61,7 +56,7 @@ public class MatchLogRiderService{
 	        		riderMatchLogRepository.save(matchLogRider);
 	        		return matchLogRider;
 	    		}else {
-					logger.error("ERROR-CUSTOMER-STATUS ::Info::userPOLLED [{}]::userINTRIP [{}]::driverACCEPTED [{}]::userUSERID [{}]", matchLogRider.getIsPooled(),matchLogRider.getInTrip(),matchLogRider.getDriveraccepted(), matchLogRider.getId());
+					logger.error("ERROR-CUSTOMER-STATUS ::Info::userPOLLED [{}]::userINTRIP [{}]::driverACCEPTED [{}]::userUSERID [{}]", matchLogRider.getIsPooled(),matchLogRider.getInTrip(),matchLogRider.getDriveraccepted(), matchLogRider.getDriverId());
 	        		logger.error("===========ERROR========MatchLogRiderServiceImpl : "+ "Driver has not accepted the request yet");
 					throw new ResourceNotFoundException("Driver has not accepted the request yet {0=NOT YET : 9=REJECTED}: " + userId, throwable);
 	    		}
@@ -73,46 +68,11 @@ public class MatchLogRiderService{
     		logger.error("===========ERROR========MatchLogRiderServiceImpl : "+ "Record not found with userId[{}]",userId);
     		throw new ResourceNotFoundException("Record not found with userId : " + userId, throwable);
     	}
-    	/*
-		Optional<MatchLogDriver> driver = driverMatchLogRepository.findById(matchLogRider.getDriverId());
-		if(driver.isPresent()) {
-			matchLogDriver = driver.get();
-			
-			if(matchLogDriver.getDriveraccepted() == 1 && matchLogRider.getIsPooled() == 0) {      //d-ACCEPTED
-        		matchLogRider.setIsPooled(1);
-        		matchLogRider.setDriveraccepted(matchLogDriver.getDriveraccepted());
-        		riderMatchLogRepository.save(matchLogRider);
-        		return matchLogRider;
-			}else if(matchLogDriver.getDriveraccepted()== 9 && matchLogRider.getIsPooled() == 0) {  //d-REJECTED
-        		matchLogRider.setIsPooled(1);
-        		matchLogRider.setDriveraccepted(matchLogDriver.getDriveraccepted());
-        		riderMatchLogRepository.save(matchLogRider);
-        		return matchLogRider;
-			}else if(matchLogDriver.getDriveraccepted()== 2 && matchLogRider.getIsPooled() == 0) {  //d-REJECTED
-        		matchLogRider.setIsPooled(1);
-        		matchLogRider.setDriveraccepted(matchLogDriver.getDriveraccepted());
-        		riderMatchLogRepository.save(matchLogRider);
-        		return matchLogRider;
-			}else {
-				logger.error("ERROR-CUSTOMER-STATUS ::Info::userPOLLED1 [{}]::driverPOLLED2 [{}]::INTRIP [{}]::ACCEPTED [{}]",matchLogRider.getIsPooled(), matchLogDriver.getIsPooled(),matchLogDriver.getInTrip(),matchLogDriver.getDriveraccepted());
-        		logger.error("===========ERROR========MatchLogRiderServiceImpl : "+ "Driver has not accepted the request yet");
-				throw new ResourceNotFoundException("Driver has not accepted the request yet {0=NOT YET : 9=REJECTED}: " + userId, throwable);
-			}
-		}else {
-			logger.error("===========ERROR========MatchLogRiderServiceImpl : "+ "Driver you claimed is not found");
-			throw new ResourceNotFoundException("Driver you claimed is not found : " + userId, throwable);
-		}
-    	}else {
-    		logger.error("===========ERROR========MatchLogRiderServiceImpl : "+ "Record not found with userId");
-    		throw new ResourceNotFoundException("Record not found with userId : " + userId, throwable);
-    	}*/
     }
 
     public MatchLogRider acceptDriverRquest(String userId) {
-    	
     	MatchLogRider  matchLogRider;
     	MatchLogDriver matchLogDriver;
-    	
     	Optional<MatchLogRider> rider = riderMatchLogRepository.findById(userId);
     	if(rider.isPresent()) {
     		matchLogRider = rider.get();
@@ -154,25 +114,45 @@ public class MatchLogRiderService{
     		cancel.setCancellationTime(simpleDateFormat.format(new Date()));
     		cancellationLogRepository.save(cancel);
     		
+    		
 			// NOW PUSH TO HISTORY TABLE
 			MatchLogHistory history = new MatchLogHistory();
+			
+			String transportType; //1=BODA , 2=ECONOMY, 3=PREMIUM
+			if(matchLogRider.getTransportMode().equalsIgnoreCase("1")) {
+				transportType = "BODA";
+			}else if(matchLogRider.getTransportMode().equalsIgnoreCase("2")) {
+				transportType = "ECONOMY CAR";
+			}else if(matchLogRider.getTransportMode().equalsIgnoreCase("3")) {
+				transportType = "PREMIUM CAR";
+			}else {
+				transportType = "OTHERS";
+			}
+			
+			history.setTripTimeTaken(matchLogRider.getEstimatedTime());
+			history.setTripAmount(Double.valueOf(matchLogRider.getEstimatedPrice()));
 			history.setConversationId(matchLogRider.getConversationId());
+			history.setDriverName(matchLogRider.getDriverName());
+			history.setRiderName(matchLogRider.getRiderName());
 			history.setCompletedByDriver(0);
 			history.setCompletedByRider(1);
 			history.setMatchTime(matchLogRider.getMatchTime());
 			history.setPickupTime(matchLogRider.getMatchTime());
 			history.setCompletionTime(simpleDateFormat.format(new Date()));
-			history.setStatus(0);
+			history.setStatus("CANCELED"); //1=COMPLETED : 2=CANCELED : EXPIRED
 			history.setsLat(matchLogRider.getRiderSourceLat());
 			history.setsLon(matchLogRider.getRiderSourceLon());
 			history.setdLat(matchLogRider.getRiderDestinationLat());
 			history.setdLon(matchLogRider.getRiderDestinationLon());
+			history.setTransportMode(matchLogRider.getTransportMode());
+			history.setTransportType(transportType);
+			history.setPickUpLocation(matchLogRider.getPickUpLocation());
+			history.setDropOffLocation(matchLogRider.getDropOffLocation());
+			history.setVehicleNumberPlate(matchLogRider.getVehicleNumberPlate());
 			history.setDriverId(matchLogRider.getDriverId());
-			history.setRiderId(matchLogRider.getId());
-			history.setDestinationDistance(0);
-			history.setPickupDistance(0);
-			history.setTripAmount(0);
-			history.setTripTimeTaken("0");
+			history.setRiderId(matchLogRider.getRiderId());
+			history.setDestinationDistance(Double.valueOf(matchLogRider.getEstimatedDistance()));
+			history.setPickupDistance(0);		
 			historyRepository.save(history);
     		logger.info("===========SUCCESS========MatchLogRiderServiceImpl : "+ "Rider REJECTED match request");
         	return matchLogRider;

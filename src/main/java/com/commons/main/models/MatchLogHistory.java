@@ -11,9 +11,15 @@ public class MatchLogHistory {
 	private String completionTime;
 	private String tripTimeTaken;
 	private String driverId;
+	private String driverName;
 	private String riderId;
+	private String riderName;
 	private String transportMode; // 1=BODA, 2=ECONOMY, 3=EXECUTIVE
-	private int status;
+	private String transportType; // 1=BODA, 2=ECONOMY, 3=EXECUTIVE
+	private String vehicleNumberPlate;
+	private String status; //COMPLETED : CANCELED : EXPIRED
+	private String pickUpLocation;
+	private String dropOffLocation;
 	private int completedByRider;
 	private int completedByDriver;
 	private double pickupDistance;
@@ -23,8 +29,6 @@ public class MatchLogHistory {
 	private double sLon;
 	private double dLat;
 	private double dLon;
-	private String pickUpLocation;
-	private String dropOffLocation;
 
 	public MatchLogHistory() {
 	}
@@ -91,14 +95,6 @@ public class MatchLogHistory {
 
 	public void setTransportMode(String transportMode) {
 		this.transportMode = transportMode;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	public int getCompletedByRider() {
@@ -188,6 +184,45 @@ public class MatchLogHistory {
 	public void setDropOffLocation(String dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
 	}
-	
+
+	public String getDriverName() {
+		return driverName;
+	}
+
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
+	}
+
+	public String getRiderName() {
+		return riderName;
+	}
+
+	public void setRiderName(String riderName) {
+		this.riderName = riderName;
+	}
+
+	public String getTransportType() {
+		return transportType;
+	}
+
+	public void setTransportType(String transportType) {
+		this.transportType = transportType;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public String getVehicleNumberPlate() {
+		return vehicleNumberPlate;
+	}
+
+	public void setVehicleNumberPlate(String vehicleNumberPlate) {
+		this.vehicleNumberPlate = vehicleNumberPlate;
+	}
 	
 }
