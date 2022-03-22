@@ -23,9 +23,9 @@ import com.commons.main.utils.ResourceNotFoundException;
 @Service
 public class MatchLogRiderService{
 
-	private static final Logger logger = LoggerFactory.getLogger(MatchLogRiderService.class);
+	private final Logger logger = LoggerFactory.getLogger(MatchLogRiderService.class);
 	
-	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	
 	@Autowired
     private MatchLogRiderRepository riderMatchLogRepository;
@@ -101,64 +101,72 @@ public class MatchLogRiderService{
     
     	if(rider.isPresent()) {
     		matchLogRider = rider.get();
-    		matchLogRider.setRideraccepted(9);//Rejected
-    		riderMatchLogRepository.save(matchLogRider);
-    		//REMEMBER TO PUSH THIS TO REJECTED QUEUE
-    		//hence bring in TRIPID or MATCHEIDS
-    		CancellationLog cancel = new CancellationLog();
-    		cancel.setConversationId(matchLogRider.getConversationId());
-    		cancel.setCancelledByUser("1");
-    		cancel.setCancelledByDriver("0");
-    		cancel.setCancellationCode("000");
-    		cancel.setCancellationCodeDescription("Driver Took too long");
-    		cancel.setCancellationTime(simpleDateFormat.format(new Date()));
-    		cancellationLogRepository.save(cancel);
-    		
-    		
-			// NOW PUSH TO HISTORY TABLE
-			MatchLogHistory history = new MatchLogHistory();
-			
-			String transportType; //1=BODA , 2=ECONOMY, 3=PREMIUM
-			if(matchLogRider.getTransportMode().equalsIgnoreCase("1")) {
-				transportType = "BODA";
-			}else if(matchLogRider.getTransportMode().equalsIgnoreCase("2")) {
-				transportType = "ECONOMY CAR";
-			}else if(matchLogRider.getTransportMode().equalsIgnoreCase("3")) {
-				transportType = "PREMIUM CAR";
-			}else {
-				transportType = "OTHERS";
-			}
-			
-			history.setTripTimeTaken(matchLogRider.getEstimatedTime());
-			history.setTripAmount(Double.valueOf(matchLogRider.getEstimatedPrice()));
-			history.setConversationId(matchLogRider.getConversationId());
-			history.setDriverName(matchLogRider.getDriverName());
-			history.setRiderName(matchLogRider.getRiderName());
-			history.setCompletedByDriver(0);
-			history.setCompletedByRider(1);
-			history.setMatchTime(matchLogRider.getMatchTime());
-			history.setPickupTime(matchLogRider.getMatchTime());
-			history.setCompletionTime(simpleDateFormat.format(new Date()));
-			history.setStatus("CANCELED"); //1=COMPLETED : 2=CANCELED : EXPIRED
-			history.setsLat(matchLogRider.getRiderSourceLat());
-			history.setsLon(matchLogRider.getRiderSourceLon());
-			history.setdLat(matchLogRider.getRiderDestinationLat());
-			history.setdLon(matchLogRider.getRiderDestinationLon());
-			history.setTransportMode(matchLogRider.getTransportMode());
-			history.setTransportType(transportType);
-			history.setPickUpLocation(matchLogRider.getPickUpLocation());
-			history.setDropOffLocation(matchLogRider.getDropOffLocation());
-			history.setVehicleNumberPlate(matchLogRider.getVehicleNumberPlate());
-			history.setDriverId(matchLogRider.getDriverId());
-			history.setRiderId(matchLogRider.getRiderId());
-			history.setDestinationDistance(Double.valueOf(matchLogRider.getEstimatedDistance()));
-			history.setPickupDistance(0);		
-			historyRepository.save(history);
+    		if(matchLogRider.getDriveraccepted() == 2) {
+    			//driver already rejected
+        		matchLogRider.setRideraccepted(9);//Rejected
+        		riderMatchLogRepository.save(matchLogRider);
+    		}else {
+        		matchLogRider.setRideraccepted(9);//Rejected
+        		riderMatchLogRepository.save(matchLogRider);
+        		
+        		//REMEMBER TO PUSH THIS TO REJECTED QUEUE
+        		//hence bring in TRIPID or MATCHEIDS
+        		CancellationLog cancel = new CancellationLog();
+        		cancel.setConversationId(matchLogRider.getConversationId());
+        		cancel.setCancelledByUser("1");
+        		cancel.setCancelledByDriver("0");
+        		cancel.setCancellationCode("000");
+        		cancel.setCancellationCodeDescription("Driver Took too long");
+        		cancel.setCancellationTime(simpleDateFormat.format(new Date()));
+        		cancellationLogRepository.save(cancel);
+        		
+    			// NOW PUSH TO HISTORY TABLE
+    			MatchLogHistory history = new MatchLogHistory();
+    			
+    			String transportType; //1=BODA , 2=ECONOMY, 3=PREMIUM
+    			if(matchLogRider.getTransportMode().equalsIgnoreCase("1")) {
+    				transportType = "BODA";
+    			}else if(matchLogRider.getTransportMode().equalsIgnoreCase("2")) {
+    				transportType = "ECONOMY CAR";
+    			}else if(matchLogRider.getTransportMode().equalsIgnoreCase("3")) {
+    				transportType = "PREMIUM CAR";
+    			}else {
+    				transportType = "OTHERS";
+    			}
+    			
+    			history.setTripTimeTaken(matchLogRider.getEstimatedTime());
+    			history.setTripAmount(Double.valueOf(matchLogRider.getEstimatedPrice()));
+    			history.setConversationId(matchLogRider.getConversationId());
+    			history.setDriverName(matchLogRider.getDriverName());
+    			history.setRiderName(matchLogRider.getRiderName());
+    			history.setCompletedByDriver(0);
+    			history.setCompletedByRider(1);
+    			history.setMatchTime(matchLogRider.getMatchTime());
+    			history.setPickupTime(matchLogRider.getMatchTime());
+    			history.setCompletionTime(simpleDateFormat.format(new Date()));
+    			history.setStatus("CANCELED"); //1=COMPLETED : 2=CANCELED : EXPIRED
+    			history.setsLat(matchLogRider.getRiderSourceLat());
+    			history.setsLon(matchLogRider.getRiderSourceLon());
+    			history.setdLat(matchLogRider.getRiderDestinationLat());
+    			history.setdLon(matchLogRider.getRiderDestinationLon());
+    			history.setTransportMode(matchLogRider.getTransportMode());
+    			history.setTransportType(transportType);
+    			history.setPickUpLocation(matchLogRider.getPickUpLocation());
+    			history.setDropOffLocation(matchLogRider.getDropOffLocation());
+    			history.setVehicleNumberPlate(matchLogRider.getVehicleNumberPlate());
+    			history.setDriverId(matchLogRider.getDriverId());
+    			history.setRiderId(matchLogRider.getRiderId());
+    			history.setDestinationDistance(Double.valueOf(matchLogRider.getEstimatedDistance()));
+    			history.setPickupDistance(0);		
+    			historyRepository.save(history);
+    			
+    		}
     		logger.info("===========SUCCESS========MatchLogRiderServiceImpl : "+ "Rider REJECTED match request");
         	return matchLogRider;
     	}else {
     		logger.error("===========ERROR========MatchLogRiderServiceImpl : "+ "Record not found with id");
-    		throw new ResourceNotFoundException("Record not found with id : " + userId);
+    		return null;
+    		//throw new ResourceNotFoundException("Record not found with id : " + userId);
     	}
     }
       

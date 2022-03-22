@@ -1,7 +1,10 @@
 package com.commons.main.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+@Document(collection = "matchLogHistory")
 public class MatchLogHistory {
 
 	@Id
@@ -10,12 +13,15 @@ public class MatchLogHistory {
 	private String pickupTime;
 	private String completionTime;
 	private String tripTimeTaken;
-	private String driverId;
+	@Field("driverId")
+	public String driverId;
 	private String driverName;
-	private String riderId;
+	@Field("riderId")
+	public String riderId;
 	private String riderName;
 	private String transportMode; // 1=BODA, 2=ECONOMY, 3=EXECUTIVE
 	private String transportType; // 1=BODA, 2=ECONOMY, 3=EXECUTIVE
+	private String paymentMode;
 	private String vehicleNumberPlate;
 	private String status; //COMPLETED : CANCELED : EXPIRED
 	private String pickUpLocation;
@@ -29,9 +35,6 @@ public class MatchLogHistory {
 	private double sLon;
 	private double dLat;
 	private double dLon;
-
-	public MatchLogHistory() {
-	}
 
 	public String getConversationId() {
 		return conversationId;
@@ -223,6 +226,14 @@ public class MatchLogHistory {
 
 	public void setVehicleNumberPlate(String vehicleNumberPlate) {
 		this.vehicleNumberPlate = vehicleNumberPlate;
+	}
+
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
 	}
 	
 }

@@ -126,17 +126,6 @@ public class MatchLogDriverService {
 			throw new ResourceNotFoundException("Record not found with id : " + userId);
 		}
 	}
-
-	public MatchLogHistory getTripStatusHistory(String conversationId) {
-		Optional<MatchLogHistory> history = historyRepository.findById(conversationId);
-		if(history.isPresent()) {
-			MatchLogHistory hist;
-			hist = history.get();
-			return hist;
-		}else {
-			return null;
-		}
-	}
 	
 	public MatchLogDriver endTripRquest(String userId) {
 
@@ -283,7 +272,8 @@ public class MatchLogDriverService {
 			return matchLogDriver;
 		} else {
 			logger.error("===========ERROR========MatchLogDriverServiceImpl : " + "Record not found with id");
-			throw new ResourceNotFoundException("Record not found with id : " + userId);
+			return null;
+			//throw new ResourceNotFoundException("Record not found with id : " + userId);
 		}
 	}
 

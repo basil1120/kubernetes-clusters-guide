@@ -8,11 +8,13 @@ com/commons/main/repository/MatchLogRiderRepository.class
 com/commons/main/service/LocationDriverBroadcastsService.class
 com/commons/main/service/LocationRiderBroadcastsService.class
 com/commons/main/models/LocationRiderBroadcasts.class
+com/commons/main/service/TripStatusService.class
 com/commons/main/controllers/RiderLogController.class
 com/commons/main/service/MatchLogHistoryService.class
 com/commons/main/service/MatchLogDriverService.class
 com/commons/main/repository/DriverLogRepository.class
 com/commons/main/controllers/DriverLogController.class
+com/commons/main/controllers/TripStatusController.class
 com/commons/main/repository/MatchLogDriverRepository.class
 com/commons/main/models/LocationDriverBroadcasts.class
 com/commons/main/service/DriverLogService.class
@@ -26,9 +28,11 @@ com/commons/main/service/RiderLogService.class
 com/commons/main/repository/LocationDriverBroadcastsRepository.class
 com/commons/main/models/RiderLog.class
 com/commons/main/utils/Properties.class
+com/commons/main/repository/TripStatusRepository.class
 com/commons/main/utils/ResourceNotFoundException.class
 com/commons/main/models/MatchLogHistory.class
 com/commons/main/repository/RiderLogRepository.class
 com/commons/main/repository/LocationRiderBroadcastsRepository.class
+com/commons/main/models/TripStatus.class
 com/commons/main/Application.class
 com/commons/main/controllers/LocationRiderBroadcastsController.class

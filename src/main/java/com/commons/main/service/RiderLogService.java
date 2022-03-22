@@ -26,9 +26,9 @@ public class RiderLogService{
 	@Autowired
     private MatchLogRiderRepository riderMatchLogRepository;
 
-	private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	
-	private static final Logger logger = LoggerFactory.getLogger(RiderLogService.class);
+	private final Logger logger = LoggerFactory.getLogger(RiderLogService.class);
 
  
     public RiderLog createRiderLog(RiderLog riderLog) {

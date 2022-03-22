@@ -16,6 +16,7 @@ public class RiderLog {
 	private String messageId;
 	private String transportMode; //1=Boda , 2=Economy, 3=Premium
 	private String transportType; //1=Boda , 2=Economy, 3=Premium
+	private String paymentMode;
 	private String estimatedTime;
 	private String estimatedDistance;
 	private String estimatedPrice;
@@ -136,4 +137,11 @@ public class RiderLog {
 	public void setInTrip(int inTrip) {
 		this.inTrip = inTrip;
 	}
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
+	
 }

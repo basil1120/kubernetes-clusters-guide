@@ -18,6 +18,7 @@ public class MatchLogRider {
 	private String cancelled;
 	private String transportMode; // 1=BODA, 2=ECONOMY, 3=EXECUTIVE
 	private String transportType; //1=BODA, 2=ECONOMY, 3=EXECUTIVE
+	private String paymentMode;
 	private String vehicleNumberPlate;
 	private String estimatedTime;
 	private String estimatedDistance;
@@ -230,4 +231,11 @@ public class MatchLogRider {
 	public void setIsPooled(int isPooled) {
 		this.isPooled = isPooled;
 	}
+	public String getPaymentMode() {
+		return paymentMode;
+	}
+	public void setPaymentMode(String paymentMode) {
+		this.paymentMode = paymentMode;
+	}
+	
 }
