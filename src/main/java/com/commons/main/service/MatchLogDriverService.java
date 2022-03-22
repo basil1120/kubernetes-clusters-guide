@@ -191,6 +191,7 @@ public class MatchLogDriverService {
 			history.setdLon(matchLogDriver.getRiderDestinationLon());
 			history.setTransportMode(matchLogDriver.getTransportMode());
 			history.setTransportType(transportType);
+			history.setPaymentMode(matchLogDriver.getPaymentMode());
 			history.setVehicleNumberPlate(matchLogDriver.getVehicleNumberPlate());
 			history.setPickupDistance(matchLogDriver.getSourceDistance());
 			history.setPickUpLocation(matchLogDriver.getPickUpLocation());
@@ -262,6 +263,7 @@ public class MatchLogDriverService {
 			history.setdLon(matchLogDriver.getRiderDestinationLon());
 			history.setTransportMode(matchLogDriver.getTransportMode());
 			history.setTransportType(transportType);
+			history.setPaymentMode(matchLogDriver.getPaymentMode());
 			history.setVehicleNumberPlate(matchLogDriver.getVehicleNumberPlate());
 			history.setDestinationDistance(Double.parseDouble(matchLogDriver.getEstimatedDistance()));
 			history.setPickupDistance(matchLogDriver.getSourceDistance());

@@ -151,6 +151,7 @@ public class MatchLogRiderService{
     			history.setdLon(matchLogRider.getRiderDestinationLon());
     			history.setTransportMode(matchLogRider.getTransportMode());
     			history.setTransportType(transportType);
+    			history.setPaymentMode(matchLogRider.getPaymentMode());
     			history.setPickUpLocation(matchLogRider.getPickUpLocation());
     			history.setDropOffLocation(matchLogRider.getDropOffLocation());
     			history.setVehicleNumberPlate(matchLogRider.getVehicleNumberPlate());
